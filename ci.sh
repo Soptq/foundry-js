@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cat < .npmrc
+//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
+EOF
+
 PKG_NAME="foundry-js"
 
 ## Define the URL to fetch and the initial page number
