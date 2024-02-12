@@ -1,8 +1,13 @@
 #!/bin/bash
 
-cat < .npmrc
-//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
-EOF
+if [[ -z "${NPM_AUTH_TOKEN}" ]]; then
+  echo "NPM_AUTH_TOKEN is not set"
+else
+  cat < .npmrc
+  registry=https://registry.npmjs.org/
+  //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
+  EOF
+fi
 
 PKG_NAME="foundry-js"
 
@@ -38,7 +43,7 @@ PKG_NAME="foundry-js"
 ## shellcheck disable=SC2207
 #DIST_TAGS=($(echo "${DIST_TAGS}" | jq -r '.[]'))
 #
-#NPM_PUSH_TAG=()
+NPM_PUSH_TAG=()
 #for tag in "${TAGS[@]}"; do
 #  # shellcheck disable=SC2199
 #  # shellcheck disable=SC2076
@@ -50,11 +55,11 @@ PKG_NAME="foundry-js"
 LATEST_VERSION=$(npm view ${PKG_NAME} version)
 npm version "${LATEST_VERSION}" --no-git-tag-version --allow-same-version
 
-NPM_PUSH_TAG=( "nightly" )
+NPM_PUSH_TAG+=("nightly")
 for tag in "${NPM_PUSH_TAG[@]}"; do
   echo "Publishing tag: ${tag}"
   npm version patch --no-git-tag-version
   npm ci
   npm run download --foundry_version="${tag}" --foreground-scripts --loglevel=verbose
-  npm publish --tag "${tag}" --dry-run
+  npm publish --tag "${tag}"
 done

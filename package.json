@@ -9,6 +9,11 @@
   },
   "author": "Soptq",
   "license": "ISC",
+  "files": [
+    "bin/*",
+    "download.js",
+    "package.json"
+  ],
   "dependencies": {
     "adm-zip": "^0.5.10",
     "node-fetch": "^2.7.0",
