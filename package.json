@@ -14,6 +14,12 @@
     "download.js",
     "package.json"
   ],
+  "bin": {
+    "forge": "bin/forge-delegate.sh",
+    "cast": "bin/cast-delegate.sh",
+    "anvil": "bin/anvil-delegate.sh",
+    "chisel": "bin/chisel-delegate.sh"
+  },
   "dependencies": {
     "adm-zip": "^0.5.10",
     "node-fetch": "^2.7.0",
