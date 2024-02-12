@@ -1,11 +1,5 @@
 #!/bin/bash
 
-if [[ -z "${NODE_AUTH_TOKEN}" ]]; then
-  echo "NODE_AUTH_TOKEN is not set"
-else
-  echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
-fi
-
 PKG_NAME="foundry-js"
 
 ## Define the URL to fetch and the initial page number
