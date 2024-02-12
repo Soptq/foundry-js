@@ -43,7 +43,7 @@ NPM_PUSH_TAG=()
 #  fi
 #done
 
-LATEST_VERSION=$(npm view ${PKG_NAME} version)
+LATEST_VERSION=$(npm view ${PKG_NAME} versions --json | jq -r '.[-1]')
 npm version "${LATEST_VERSION}" --no-git-tag-version --allow-same-version
 
 NPM_PUSH_TAG+=("nightly")
