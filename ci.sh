@@ -3,7 +3,7 @@
 PKG_NAME="foundry-js"
 
 # Define the URL to fetch and the initial page number
-URL="https://api.github.com/repos/foundry-rs/foundry/tags?per_page=100&page="
+URL="https://api.github.com/repos/foundry-rs/foundry/releases?per_page=100&page="
 PAGE=1
 
 # Define an empty array to hold the tag names
@@ -13,7 +13,7 @@ TAGS=()
 while true; do
   # Fetch the current page and parse the JSON response
   RESPONSE=$(curl -s "${URL}${PAGE}")
-  TAGS_JSON=$(echo "${RESPONSE}" | jq -r '.[].name')
+  TAGS_JSON=$(echo "${RESPONSE}" | jq -r '.[].tag_name')
 
   # If the response is empty, we're done
   if [[ "${TAGS_JSON}" == "" ]]; then
