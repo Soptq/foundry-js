@@ -3,10 +3,7 @@
 if [[ -z "${NODE_AUTH_TOKEN}" ]]; then
   echo "NODE_AUTH_TOKEN is not set"
 else
-  cat < .npmrc
-  registry=https://registry.npmjs.org/
-  //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-  EOF
+  echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
 fi
 
 PKG_NAME="foundry-js"
