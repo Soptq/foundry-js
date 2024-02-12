@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [[ -z "${NPM_AUTH_TOKEN}" ]]; then
-  echo "NPM_AUTH_TOKEN is not set"
+if [[ -z "${NODE_AUTH_TOKEN}" ]]; then
+  echo "NODE_AUTH_TOKEN is not set"
 else
   cat < .npmrc
   registry=https://registry.npmjs.org/
-  //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
+  //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
   EOF
 fi
 
