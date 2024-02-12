@@ -1,0 +1,13 @@
+foundry-up.iml
+.idea
+
+.DS_Store
+
+bin/forge
+bin/cast
+bin/anvil
+bin/chisel
+
+foundry_nightly_*
+
+node_modules/

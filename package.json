@@ -1,0 +1,17 @@
+{
+  "name": "foundry-js",
+  "version": "1.0.0",
+  "description": "The foundry binary published to npmjs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "download": "node download.js"
+  },
+  "author": "Soptq",
+  "license": "ISC",
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "node-fetch": "^2.7.0",
+    "tar": "^6.2.0"
+  }
+}
