@@ -54,4 +54,5 @@ for tag in "${NPM_PUSH_TAG[@]}"; do
   npm ci
   npm run download --foundry_version="${tag}" --foreground-scripts --loglevel=verbose
   npm publish --tag "${tag}"
+  npm run clean
 done

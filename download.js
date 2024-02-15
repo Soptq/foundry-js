@@ -78,7 +78,6 @@ async function main() {
                 // rename each extracted file
             } catch (err) {
                 console.error(err);
-                process.exit(1);
             }
         }
     }

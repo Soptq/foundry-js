@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "download": "node download.js"
+    "download": "node download.js",
+    "clean": "rm -rf bin/darwin_amd64 && rm -rf bin/darwin_arm64 && rm -rf bin/linux_amd64 && rm -rf bin/linux_arm64"
   },
   "author": "Soptq",
   "license": "ISC",

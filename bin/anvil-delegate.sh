@@ -19,4 +19,9 @@ else
   ARCHITECTURE="amd64" # Amd.
 fi
 
+if [ ! -f "$(dirname $(realpath $0))/${PLATFORM}_${ARCHITECTURE}/anvil" ]; then
+  echo "anvil binary not found for ${PLATFORM}-${ARCHITECTURE}"
+  exit 1
+fi
+
 exec $(dirname $(realpath $0))/${PLATFORM}_${ARCHITECTURE}/anvil "$@"
