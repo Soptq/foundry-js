@@ -35,13 +35,14 @@ DIST_TAGS=$(npm view ${PKG_NAME} dist-tags --json | jq keys)
 DIST_TAGS=($(echo "${DIST_TAGS}" | jq -r '.[]'))
 
 NPM_PUSH_TAG=()
-#for tag in "${TAGS[@]}"; do
+for tag in "${TAGS[@]}"; do
+  NPM_PUSH_TAG+=("${tag}")
 #  # shellcheck disable=SC2199
 #  # shellcheck disable=SC2076
 #  if [[ ! " ${DIST_TAGS[@]} " =~ " ${tag} " ]]; then
 #    NPM_PUSH_TAG+=("${tag}")
 #  fi
-#done
+done
 
 LATEST_VERSION=$(npm view ${PKG_NAME} versions --json | jq -r '.[-1]')
 npm version "${LATEST_VERSION}" --no-git-tag-version --allow-same-version
