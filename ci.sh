@@ -36,12 +36,11 @@ DIST_TAGS=($(echo "${DIST_TAGS}" | jq -r '.[]'))
 
 NPM_PUSH_TAG=()
 for tag in "${TAGS[@]}"; do
-  NPM_PUSH_TAG+=("${tag}")
-#  # shellcheck disable=SC2199
-#  # shellcheck disable=SC2076
-#  if [[ ! " ${DIST_TAGS[@]} " =~ " ${tag} " ]]; then
-#    NPM_PUSH_TAG+=("${tag}")
-#  fi
+  # shellcheck disable=SC2199
+  # shellcheck disable=SC2076
+  if [[ ! " ${DIST_TAGS[@]} " =~ " ${tag} " ]]; then
+    NPM_PUSH_TAG+=("${tag}")
+  fi
 done
 
 LATEST_VERSION=$(npm view ${PKG_NAME} versions --json | jq -r '.[-1]')
