@@ -1,7 +1,6 @@
 #!/bin/bash
 
 PKG_NAME=$(cat package.json | jq -r '.name')
-echo "Publishing package ${PKG_NAME}"
 
 # Define the URL to fetch and the initial page number
 URL="https://api.github.com/repos/foundry-rs/foundry/releases?per_page=100&page="
@@ -73,7 +72,7 @@ for tag in "${NPM_PUSH_TAG[@]}"; do
   if [[ -z "${RELEASE_HASH}" ]]; then
     RELEASE_DIST_TAG="${RELEASE_DIST}-${RELEASE_VERSION}"
   else
-    RELEASE_DIST_TAG="${RELEASE_DIST}-${RELEASE_VERSION}+${RELEASE_HASH}"
+    RELEASE_DIST_TAG="${RELEASE_DIST}-${RELEASE_VERSION}-${RELEASE_HASH}"
   fi
   echo "Publishing to dist-tag ${RELEASE_DIST_TAG}"
   npm publish --tag "${RELEASE_DIST_TAG}"
