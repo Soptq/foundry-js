@@ -35,23 +35,37 @@ DIST_TAGS=$(npm view ${PKG_NAME} dist-tags --json | jq keys)
 DIST_TAGS=($(echo "${DIST_TAGS}" | jq -r '.[]'))
 
 NPM_PUSH_TAG=()
-for tag in "${TAGS[@]}"; do
-  # shellcheck disable=SC2199
-  # shellcheck disable=SC2076
-  if [[ ! " ${DIST_TAGS[@]} " =~ " ${tag} " ]]; then
-    NPM_PUSH_TAG+=("${tag}")
-  fi
-done
+#for tag in "${TAGS[@]}"; do
+#  # shellcheck disable=SC2199
+#  # shellcheck disable=SC2076
+#  if [[ ! " ${DIST_TAGS[@]} " =~ " ${tag} " ]]; then
+#    NPM_PUSH_TAG+=("${tag}")
+#  fi
+#done
 
-LATEST_VERSION=$(npm view ${PKG_NAME} versions --json | jq -r '.[-1]')
+if { LATEST_VERSION=$(npm view ${PKG_NAME} versions --json); } then
+  LATEST_VERSION=$(echo "${LATEST_VERSION}" | jq -r '.[-1]')
+else
+  LATEST_VERSION="1.0.0"
+fi
+
 npm version "${LATEST_VERSION}" --no-git-tag-version --allow-same-version
 
 NPM_PUSH_TAG+=("nightly")
 for tag in "${NPM_PUSH_TAG[@]}"; do
-  echo "Publishing tag: ${tag}"
+  echo "Publishing tag ${tag}"
   npm version patch --no-git-tag-version
   npm ci
   npm run download --foundry_version="${tag}" --foreground-scripts --loglevel=verbose
-  npm publish --tag "${tag}"
+  RELEASE_VERSION=$(bash bin/forge-delegate.sh -V | awk '{print $2}')
+  RELEASE_DIST=$(echo "${tag}" | awk '{split($0,array,"-"); print array[1]}')
+  RELEASE_HASH=$(echo "${tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,0,6)}')
+  if [[ -z "${RELEASE_HASH}" ]]; then
+    RELEASE_DIST_TAG="${RELEASE_VERSION}-${RELEASE_DIST}"
+  else
+    RELEASE_DIST_TAG="${RELEASE_VERSION}-${RELEASE_DIST}+${RELEASE_HASH}"
+  fi
+  echo "Publishing to dist-tag ${RELEASE_DIST_TAG}"
+  npm publish --tag "${RELEASE_DIST_TAG}"
   npm run clean
 done
