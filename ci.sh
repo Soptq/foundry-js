@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PKG_NAME="foundry-js"
+PKG_NAME=$(cat package.json | jq -r '.name')
+echo "Publishing package ${PKG_NAME}"
 
 # Define the URL to fetch and the initial page number
 URL="https://api.github.com/repos/foundry-rs/foundry/releases?per_page=100&page="
@@ -35,13 +36,22 @@ DIST_TAGS=$(npm view ${PKG_NAME} dist-tags --json | jq keys)
 DIST_TAGS=($(echo "${DIST_TAGS}" | jq -r '.[]'))
 
 NPM_PUSH_TAG=()
-#for tag in "${TAGS[@]}"; do
-#  # shellcheck disable=SC2199
-#  # shellcheck disable=SC2076
-#  if [[ ! " ${DIST_TAGS[@]} " =~ " ${tag} " ]]; then
-#    NPM_PUSH_TAG+=("${tag}")
-#  fi
-#done
+for tag in "${TAGS[@]}"; do
+  DIST=$(echo "${tag}" | awk '{split($0,array,"-"); print array[1]}')
+  HASH=$(echo "${tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,0,6)}')
+  TAG_RELEASED=false
+  for dist_tag in "${DIST_TAGS[@]}"; do
+    DIST_DIST=$(echo "${dist_tag}" | awk '{split($0,array,"-"); print array[1]}')
+    DIST_HASH=$(echo "${dist_tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,length($0)-5,6)}')
+    if [[ "${DIST}" == "${DIST_DIST}" ]] && [[ "${HASH}" == "${DIST_HASH}" ]]; then
+      TAG_RELEASED=true
+      break
+    fi
+  done
+  if [[ "${TAG_RELEASED}" == "false" ]]; then
+    NPM_PUSH_TAG+=("${tag}")
+  fi
+done
 
 if { LATEST_VERSION=$(npm view ${PKG_NAME} versions --json); } then
   LATEST_VERSION=$(echo "${LATEST_VERSION}" | jq -r '.[-1]')
