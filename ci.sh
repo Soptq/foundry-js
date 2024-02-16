@@ -41,7 +41,7 @@ for tag in "${TAGS[@]}"; do
   TAG_RELEASED=false
   for dist_tag in "${DIST_TAGS[@]}"; do
     DIST_DIST=$(echo "${dist_tag}" | awk '{split($0,array,"-"); print array[1]}')
-    DIST_HASH=$(echo "${dist_tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,length($0)-6,7)}')
+    DIST_HASH=$(echo "${dist_tag}" | awk '{split($0,array,"-"); print array[3]}')
     if [[ "${DIST}" == "${DIST_DIST}" ]] && [[ "${HASH}" == "${DIST_HASH}" ]]; then
       TAG_RELEASED=true
       break
