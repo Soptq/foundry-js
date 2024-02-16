@@ -37,11 +37,11 @@ DIST_TAGS=($(echo "${DIST_TAGS}" | jq -r '.[]'))
 NPM_PUSH_TAG=()
 for tag in "${TAGS[@]}"; do
   DIST=$(echo "${tag}" | awk '{split($0,array,"-"); print array[1]}')
-  HASH=$(echo "${tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,0,6)}')
+  HASH=$(echo "${tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,0,7)}')
   TAG_RELEASED=false
   for dist_tag in "${DIST_TAGS[@]}"; do
     DIST_DIST=$(echo "${dist_tag}" | awk '{split($0,array,"-"); print array[1]}')
-    DIST_HASH=$(echo "${dist_tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,length($0)-5,6)}')
+    DIST_HASH=$(echo "${dist_tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,length($0)-6,7)}')
     if [[ "${DIST}" == "${DIST_DIST}" ]] && [[ "${HASH}" == "${DIST_HASH}" ]]; then
       TAG_RELEASED=true
       break
@@ -68,7 +68,7 @@ for tag in "${NPM_PUSH_TAG[@]}"; do
   npm run download --foundry_version="${tag}" --foreground-scripts --loglevel=verbose
   RELEASE_VERSION=$(bash bin/forge-delegate.sh -V | awk '{print $2}')
   RELEASE_DIST=$(echo "${tag}" | awk '{split($0,array,"-"); print array[1]}')
-  RELEASE_HASH=$(echo "${tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,0,6)}')
+  RELEASE_HASH=$(echo "${tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,0,7)}')
   if [[ -z "${RELEASE_HASH}" ]]; then
     RELEASE_DIST_TAG="${RELEASE_DIST}-${RELEASE_VERSION}"
   else

@@ -8,9 +8,9 @@ The foundry binary published to npmjs.
 npm install foundry-js@nightly
 
 # or install globally
-# npm install -g foundry-js@0.2.0-nightly
+# npm install -g foundry-js@nightly-0.2.0
 # or specify a release tag (version)
-# npm install foundry-js@0.2.0-nightly-87bc53fc6c874bd4c92d97ed180b949e3a36d78c
+# npm install foundry-js@nightly-0.2.0-a170021
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ If installed globally:
 ```bash
 forge -V
 
-# forge 0.2.0 (87bc53 2024-02-09T00:16:22.953958126Z)
+# forge 0.2.0 (a170021 2024-02-16T00:17:36.445247161Z)
 ```
 
 If installed locally:
@@ -28,7 +28,7 @@ If installed locally:
 ```bash
 npx forge -V
 
-# forge 0.2.0 (87bc53 2024-02-09T00:16:22.953958126Z)
+# forge 0.2.0 (a170021 2024-02-16T00:17:36.445247161Z)
 ```
 
 ## Development
