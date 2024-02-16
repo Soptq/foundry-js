@@ -1,6 +1,6 @@
 # foundry-js
 
-The foundry binary published to npmjs.
+The foundry binary published to npmjs. See all the available versions [here](https://www.npmjs.com/package/foundry-js?activeTab=versions).
 
 ## Install
 
