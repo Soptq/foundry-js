@@ -61,9 +61,9 @@ for tag in "${NPM_PUSH_TAG[@]}"; do
   RELEASE_DIST=$(echo "${tag}" | awk '{split($0,array,"-"); print array[1]}')
   RELEASE_HASH=$(echo "${tag}" | awk '{split($0,array,"-"); print array[2]}' | awk '{print substr($0,0,6)}')
   if [[ -z "${RELEASE_HASH}" ]]; then
-    RELEASE_DIST_TAG="${RELEASE_VERSION}-${RELEASE_DIST}"
+    RELEASE_DIST_TAG="${RELEASE_DIST}-${RELEASE_VERSION}"
   else
-    RELEASE_DIST_TAG="${RELEASE_VERSION}-${RELEASE_DIST}+${RELEASE_HASH}"
+    RELEASE_DIST_TAG="${RELEASE_DIST}-${RELEASE_VERSION}+${RELEASE_HASH}"
   fi
   echo "Publishing to dist-tag ${RELEASE_DIST_TAG}"
   npm publish --tag "${RELEASE_DIST_TAG}"
