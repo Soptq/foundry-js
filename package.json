@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The foundry binary published to npmjs.",
   "homepage": "https://github.com/Soptq/foundry-js",
-  "repository": "github:Soptq/foundry-js",
+  "repository": "https://github.com/Soptq/foundry-js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
